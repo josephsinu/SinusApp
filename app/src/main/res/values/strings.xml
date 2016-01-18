@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">Sinus App</string>
+    <string name="action_settings">Settings</string>
+    <string name="userName">Name</string>
+    <string name="lblMemeGenerator">Meme Generator</string>
+</resources>
