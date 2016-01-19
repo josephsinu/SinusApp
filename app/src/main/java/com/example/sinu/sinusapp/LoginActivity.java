@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.TextView;
+import android.content.Intent;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -33,6 +34,10 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+
+    }
+
+    public void onClick(View view) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("Your name cannot be empty")
                 .setCancelable(false)
@@ -42,30 +47,27 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 });
         final AlertDialog alert = builder.create();
-
-
         final TextView name = (TextView) findViewById(R.id.editText);
         final Button enterBtn = (Button) findViewById(R.id.button);
 
-        enterBtn.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-                if (name.getText().toString().trim().length() == 0) {
-                    alert.show();
-                } else {
-                    Snackbar.make(view, "Welcome! " + name.getText().toString(), Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
-                }
-                InputMethodManager inputManager = (InputMethodManager)
-                        getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (name.getText().toString().trim().length() == 0) {
+            alert.show();
+        } else {
+            Snackbar.make(view, "Welcome! " + name.getText().toString(), Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show();
+            Intent i = new Intent(this, WelcomeActivity.class);
 
-                inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),
-                        InputMethodManager.HIDE_NOT_ALWAYS);
-            }
-        });
+            String userName = name.getText().toString();
+            i.putExtra("userName", userName);
 
+            startActivity(i);
+        }
+        InputMethodManager inputManager = (InputMethodManager)
+                getSystemService(Context.INPUT_METHOD_SERVICE);
 
-    }
-
+        inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),
+                InputMethodManager.HIDE_NOT_ALWAYS);
+    };
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
